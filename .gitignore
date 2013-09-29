@@ -1,0 +1,11 @@
+.classpath
+.project
+.settings/
+target/
+nbactions.xml
+node_modules
+npm-debug.log
+bower_components
+dist
+build
+*.jar
