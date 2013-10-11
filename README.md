@@ -8,7 +8,7 @@ Documentation available at http://jhades.org
 
 #### Example of a classpath problem
 
-Let's suppose a java web application works fine in development, but when deploying it to an application server the following problem occurs:
+Let's say a java web application works fine in development, but when deploying it to a server the following problem occurs:
 
 ```
 
