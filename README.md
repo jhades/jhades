@@ -22,6 +22,17 @@ java.lang.ClassCastException: org.apache.bval.jsr303.ApacheValidationProvider ca
 
 #### How to troubleshoot
 
+JHades provides several commands that allow to extract from the runtime environment a lot of information 
+which is essential to understanding what is going on. Namelly these types of questions can be answered:
+
+- are there any overlapping jars, with different versions of the same class?
+- Are those multiple versions of the same class all identical or not ?
+- where are the different versions of a given class located ?
+- which class loader is loading which version of a given class ?
+- What does the chain of classloaders look like, how are the classloaders configured ?
+
+This is an example of how to answer several of these questions for the sample problem above:
+
 ```java
  
  new JHades()
@@ -35,6 +46,8 @@ java.lang.ClassCastException: org.apache.bval.jsr303.ApacheValidationProvider ca
 ```
 
 #### Jar overlap report 
+
+One of the most common sources of classpath problems are overlapping jar files, that contain multiple versions of the same class:
 
 ```
 
