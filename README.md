@@ -7,6 +7,9 @@ Documentation available at http://jhades.org
 
 
 #### Example of a classpath problem
+
+Let's suppose a java web application works fine in development, but when deploying it to an application server the following problem occurs:
+
 ```
 
 java.lang.ClassCastException: org.apache.bval.jsr303.ApacheValidationProvider cannot be cast to javax.validation.spi.ValidationProvider
