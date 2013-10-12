@@ -24,6 +24,8 @@ public class WarReportScanner extends WarScannerTemplate {
     private static final Pattern JAR_NAME = Pattern.compile("^.*/([^/]+\\.jar)$");
     private static final StdOutLogger logger = StdOutLogger.getLogger();
     private ClasspathScanner scanner = new ClasspathScanner();
+    // for the moment this functionality is permanently turned off
+    private boolean isReportClassFileDuplicatesOn = false;
 
     public WarReportScanner(String warFilePath, String tmpPath) {
         super(warFilePath, tmpPath);
@@ -71,50 +73,53 @@ public class WarReportScanner extends WarScannerTemplate {
             System.out.println("#OVERLAP_JARS# " + json);
         }
 
-        updateStatus("Searching for class file duplicates");
-        List<ClasspathResource> classFilesWithDuplicates = scanner.findClassFileDuplicates(classpathResources, false);
-
-        // class file duplicates report
-        for (ClasspathResource classFile : classFilesWithDuplicates) {
-            Matcher matcher = FILE_NAME.matcher(classFile.getName());
-            if (matcher.matches()) {
-                String packageName = matcher.group(1);
-                String className = matcher.group(2);
-
-                if (packageName != null) {
-                    packageName = packageName.replaceAll("/", "\\.");
-                }
-
-                Json jsonObject = new Json();
-                jsonObject.setProperty("packageName", packageName);
-                jsonObject.setProperty("className", className);
-                jsonObject.setProperty("numberOfVersions", "" + classFile.getNumberOfVersions());
-                String json = jsonObject.stringify();
-                System.out.println("#DUPLICATE_CLASS# " + json);
-            } else {
-                logger.error("could not process " + classFile.getName());
-            }
-        }
-
         System.out.println("#SUMMARY_FINISHED#");
 
-        for (ClasspathResource classFile : classFilesWithDuplicates) {
-            for (ClasspathResourceVersion resourceVersion : classFile.getResourceFileVersions()) {
-                String fileFullPathName = classFile.getName();
-                String classpathEntry = resourceVersion.getClasspathEntry().getUrl();
-                if (classpathEntry != null) {
-                    Matcher matcher = JAR_NAME.matcher(classpathEntry);
-                    if (matcher.matches()) {
-                        classpathEntry = matcher.group(1);
+        if (isReportClassFileDuplicatesOn) {
+            updateStatus("Searching for class file duplicates");
+            List<ClasspathResource> classFilesWithDuplicates = scanner.findClassFileDuplicates(classpathResources, false);
+
+            // class file duplicates report
+            for (ClasspathResource classFile : classFilesWithDuplicates) {
+                Matcher matcher = FILE_NAME.matcher(classFile.getName());
+                if (matcher.matches()) {
+                    String packageName = matcher.group(1);
+                    String className = matcher.group(2);
+
+                    if (packageName != null) {
+                        packageName = packageName.replaceAll("/", "\\.");
                     }
+
+                    Json jsonObject = new Json();
+                    jsonObject.setProperty("packageName", packageName);
+                    jsonObject.setProperty("className", className);
+                    jsonObject.setProperty("numberOfVersions", "" + classFile.getNumberOfVersions());
+                    String json = jsonObject.stringify();
+                    System.out.println("#DUPLICATE_CLASS# " + json);
+                } else {
+                    logger.error("could not process " + classFile.getName());
                 }
-                long size = resourceVersion.getFileSize();
-                Json json = new Json();
-                json.setProperty("size", Long.toString(size));
-                json.setProperty("file", fileFullPathName);
-                json.setProperty("entry", classpathEntry);
-                System.out.println("#DETAIL# " + json.stringify());
             }
+
+            for (ClasspathResource classFile : classFilesWithDuplicates) {
+                for (ClasspathResourceVersion resourceVersion : classFile.getResourceFileVersions()) {
+                    String fileFullPathName = classFile.getName();
+                    String classpathEntry = resourceVersion.getClasspathEntry().getUrl();
+                    if (classpathEntry != null) {
+                        Matcher matcher = JAR_NAME.matcher(classpathEntry);
+                        if (matcher.matches()) {
+                            classpathEntry = matcher.group(1);
+                        }
+                    }
+                    long size = resourceVersion.getFileSize();
+                    Json json = new Json();
+                    json.setProperty("size", Long.toString(size));
+                    json.setProperty("file", fileFullPathName);
+                    json.setProperty("entry", classpathEntry);
+                    System.out.println("#DETAIL# " + json.stringify());
+                }
+            }
+
         }
     }
 }
