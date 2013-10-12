@@ -59,7 +59,6 @@
 
     <modules>
         <module>jhades</module>
-        <module>jhades-json-reports</module>
         <module>jhades-standalone-report</module>
     </modules>
 
@@ -124,13 +123,19 @@
 
     <profiles>
         <profile>
+            <id>all</id>
+            <modules>
+                <module>jhades-json-reports</module>
+            </modules>
+        </profile>      
+        <profile>
             <id>central</id>
             <activation>
               <property>
                 <name>performRelease</name>
                 <value>true</value>
               </property>
-            </activation>            
+            </activation>   
             <build>
                 <plugins>
                     <plugin>
