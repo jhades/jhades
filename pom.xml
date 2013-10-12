@@ -2,11 +2,55 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0    http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+      <groupId>org.sonatype.oss</groupId>
+      <artifactId>oss-parent</artifactId>
+      <version>7</version>
+    </parent>
+
     <groupId>org.jhades</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
     <name>jHades</name>
+    <description>Java classpath troubleshooting tool</description>
+    <url>http://jhades.org</url>
+
+  <licenses>
+    <license>
+     <name>The MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <scm>
+      <connection>scm:git:https://github.com/jhades/jhades.git</connection>
+      <developerConnection>scm:git:https://github.com/jhades/jhades.git</developerConnection> 
+      <url>https://github.com/jhades/jhades</url>
+  </scm> 
+
+  <distributionManagement>
+      <!-- Repository for snapshots -->
+      <snapshotRepository>
+          <id>sonatype-nexus-snapshots</id>
+          <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      </snapshotRepository>
+      <!-- Repository for releases -->
+      <repository>
+          <id>nexus-releases</id>
+          <name>Nexus Release Repository</name>
+          <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      </repository>
+  </distributionManagement>    
+
+  <developers>
+    <developer>
+      <id>jhades</id>
+      <name>jhades</name>
+      <email>jhades.dev@gmail.com</email>
+    </developer>
+  </developers>       
 
     <properties>
         <junit.version>4.11</junit.version>
@@ -62,7 +106,70 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-source-plugin</artifactId>
+              <version>2.1.2</version>
+              <executions>
+                  <execution>
+                      <id>attach-sources</id>
+                      <goals>
+                          <goal>jar</goal>
+                      </goals>
+                  </execution>
+              </executions>
+            </plugin>                    
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>central</id>
+            <activation>
+              <property>
+                <name>performRelease</name>
+                <value>true</value>
+              </property>
+            </activation>            
+            <build>
+                <plugins>
+                    <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-javadoc-plugin</artifactId>
+                      <version>2.9.1</version>
+                      <configuration>
+                          <quiet>true</quiet>
+                          <nonavbar>true</nonavbar>
+                          <notree>true</notree>
+                          <nocomment>true</nocomment>
+                          <nohelp>true</nohelp>
+                      </configuration>
+                      <executions>
+                          <execution>
+                              <id>attach-javadocs</id>
+                              <goals>
+                                  <goal>jar</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                    </plugin> 
+                    <plugin>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-gpg-plugin</artifactId>
+                      <version>1.4</version>
+                      <executions>
+                          <execution>
+                              <id>sign-artifacts</id>
+                              <phase>verify</phase>
+                              <goals>
+                                  <goal>sign</goal>
+                              </goals>
+                          </execution>
+                      </executions>
+                    </plugin>   
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
