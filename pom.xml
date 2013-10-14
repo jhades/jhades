@@ -11,7 +11,7 @@
     <groupId>org.jhades</groupId>
     <artifactId>parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
     <name>jHades</name>
     <description>Java classpath troubleshooting tool</description>
     <url>http://jhades.org</url>
