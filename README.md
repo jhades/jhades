@@ -26,7 +26,7 @@ java.lang.ClassCastException: org.apache.bval.jsr303.ApacheValidationProvider ca
 #### How to troubleshoot
 
 JHades provides several commands that allow to extract from the runtime environment a lot of information 
-which is essential to understanding what is going on. Namelly these types of questions can be answered:
+which is important for understanding what is going on. Namelly these types of questions can be answered:
 
 - are there any overlapping jars, with different versions of the same class?
 - Are those multiple versions of the same class all identical or not ?
