@@ -9,3 +9,4 @@ bower_components
 dist
 build
 *.jar
+pom.xml.versionsBackup
