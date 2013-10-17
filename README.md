@@ -68,4 +68,4 @@ Total number of classes with more than one version: 305
 
 ```
 
-Check http://jhades.org for more details!
+Check http://jhades.org for more details.
