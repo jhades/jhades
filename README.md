@@ -1,7 +1,10 @@
 JHades - Your way out of Jar Hell!
 ======
 
-A java classpath troubleshooting utility that allows to query the classpath for class duplicates, find specific resource locations, etc.
+JHades is a Java classpath troubleshooting tool. It helps to solve common Java classpath / Jar Hell related problems 
+such as ClassNotFoundException, NoClassDefFoundError, ClassCastException, NoSuchMethodException, LinkageError, etc.
+
+It allows to query the classpath for class duplicates, find specific resource locations, etc.
 
 Documentation available at http://jhades.org
 
