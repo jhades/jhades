@@ -58,4 +58,10 @@ public class ClasspathResourceVersion {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "ClasspathResourceVersion{classpathEntry=" + classpathEntry.toString() + ", resourceName="
+            + resourceName + ", fileSize=" + fileSize + "}";
+    }
 }
