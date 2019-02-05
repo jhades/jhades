@@ -6,7 +6,7 @@ such as ClassNotFoundException, NoClassDefFoundError, ClassCastException, NoSuch
 
 It allows to query the classpath for class duplicates, find specific resource locations, etc.
 
-Documentation available at http://jhades.org
+Documentation available at http://jhades.github.io
 
 
 #### Example of a classpath problem
@@ -71,4 +71,4 @@ Total number of classes with more than one version: 305
 
 ```
 
-Check http://jhades.org for more details.
+Check http://jhades.github.io for more details.
